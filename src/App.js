@@ -18,15 +18,17 @@ export default function App() {
 
   useInterval(() => {
     setMessageToShow(messagesToShow => messagesToShow + 1);
-  }, 2000)
+  }, 2000);
+
   return (
     <div className="app">
       <div className="walkthrough">
         {messages.map((message, index) => {
+          const even = index === message;
           // logic goes here
           // are we supposed to show this message?
           // are wew supposed to show typing indicator?
-          if(messagesToShow + 1 === index) return <div key={index}>I am Typing...</div>
+          if(messagesToShow + 1 === index) return <TypingIndicator key={index} even={even} />
           if(index > messagesToShow) return <div key={index} />
           return (
             <Message key={index} message={message}/>
@@ -35,6 +37,18 @@ export default function App() {
       </div>
     </div>
   );
+}
+
+const TypingIndicator = ({ even, odd }) => {
+  return (
+    <div className={`typing ${even ? 'is-right' : 'is-left'}`}>
+      <div className='dots'>
+        <div />
+        <div />
+        <div />
+      </div>
+    </div>
+  )
 }
 
 const Message = ({ message }) => {
