@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 import useInterval from '@use-it/interval';
 import React, { useState } from 'react';
+import { motion } from "framer-motion"
+
 import './App.css';
 
 const messages = [
@@ -24,7 +26,7 @@ export default function App() {
     <div className="app">
       <div className="walkthrough">
         {messages.map((message, index) => {
-          const even = index === message;
+          const even = index % 2 === 0;
           // logic goes here
           // are we supposed to show this message?
           // are wew supposed to show typing indicator?
@@ -39,24 +41,34 @@ export default function App() {
   );
 }
 
-const TypingIndicator = ({ even, odd }) => {
+const TypingIndicator = ({ even }) => {
   return (
-    <div className={`typing ${even ? 'is-right' : 'is-left'}`}>
+    <motion.div 
+      className={`typing ${even ? 'is-left' : 'is-right'}`}
+      initial={{ scale: .2, rotate: -10 }} 
+      animate={{ scale: 1, rotate: 0 }} 
+      transition={{ duration: .1 }}
+    >
       <div className='dots'>
         <div />
         <div />
         <div />
       </div>
-    </div>
+    </motion.div>
   )
 }
 
 const Message = ({ message }) => {
   return (
-    <div className="message">
+    <motion.div 
+      className="message" 
+      initial={{ scale: .2, rotate: -10 }} 
+      animate={{ scale: 1, rotate: 0 }} 
+      transition={{ duration: .1 }}
+    >
       <div className='avatar'>🐸</div>
       <div className='text'>{message.text}</div>
       <div className='avatar'>🐙</div>
-    </div>
+    </motion.div>
   )
 }
